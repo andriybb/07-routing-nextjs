@@ -1,7 +1,7 @@
-'use client'
-import axios from 'axios';
-import  Note from "@/types/note";
 
+import axios from 'axios';
+import type { Note } from "@/types/note";
+import type { NoteTag } from "@/types/note";
 interface NoteResponse {
     notes: Note[];
     totalPages: number;
@@ -69,3 +69,25 @@ export async function fetchNoteById(id:string): Promise<Note> {
 
     return response.data;
 };
+
+
+export const fetchNoteByTag = async (tag?: NoteTag): Promise<NoteResponse> => {
+    const params: Record<string, string> = {};
+    
+ 
+    if (tag && tag !== 'all') {
+      params.tag = tag;
+    }
+  
+    const response = await axios.get<NoteResponse>(
+      'https://notehub-public.goit.study/api/notes',
+      {
+        params,
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+        },
+      },
+    );
+  
+    return response.data;
+  };
