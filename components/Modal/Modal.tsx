@@ -33,7 +33,7 @@ const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
 };
   
   if (!modalRoot) return null;
-  
+
   return createPortal(
     <div
   className={css.backdrop}
