@@ -25,10 +25,10 @@ export default function SidebarNotes() {
         </Link>
       </li>
       <li className={css.menuItem}>
-        <Link href={`/notes/filter/Meetings`} className={css.menuLink}>
-       <strong>Meetings</strong> 
-        </Link>
-      </li>
+  <Link href={`/notes/filter/Meeting`} className={css.menuLink}>
+    <strong>Meeting</strong>
+  </Link>
+</li>
       <li className={css.menuItem}>
         <Link href={`/notes/filter/Shopping`} className={css.menuLink}>
          <strong>Shopping</strong>

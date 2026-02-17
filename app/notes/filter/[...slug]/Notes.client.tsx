@@ -3,6 +3,10 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { fetchNotes } from '@/lib/api';
 import NoteList from '@/components/NoteList/NoteList';
+import SearchBox from '@/components/SearchBox/SearchBox';
+import Pagination from '@/components/Pagination/Pagination';
+import Modal from '@/components/Modal/Modal';
+import NoteForm from '@/components/NoteForm/NoteForm';
 import type { NoteTag } from '@/types/note';
 import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
@@ -28,20 +32,18 @@ const NotesByCategory = ({ tag }: Props) => {
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 1;
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-    setPage(1); // скидаємо сторінку при новому пошуку
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(1);
   };
 
   return (
     <div>
       <h1>Список Нотаток {tag ? `за фільтром - ${tag}` : ''}</h1>
 
-      <input
-        type="text"
+      <SearchBox
         value={search}
         onChange={handleSearchChange}
-        placeholder="Пошук нотаток..."
       />
 
       <button onClick={() => setIsModalOpen(true)}>
@@ -49,10 +51,9 @@ const NotesByCategory = ({ tag }: Props) => {
       </button>
 
       {isModalOpen && (
-        // твій компонент модального вікна для створення нотатки
-        <div>
-          {/* <CreateNoteModal onClose={() => setIsModalOpen(false)} /> */}
-        </div>
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <NoteForm onClose={() => setIsModalOpen(false)} />
+        </Modal>
       )}
 
       {isLoading && <p>Завантаження...</p>}
@@ -64,15 +65,11 @@ const NotesByCategory = ({ tag }: Props) => {
       )}
 
       {totalPages > 1 && (
-        <div>
-          <button onClick={() => setPage(p => p - 1)} disabled={page === 1}>
-            Назад
-          </button>
-          <span>{page} / {totalPages}</span>
-          <button onClick={() => setPage(p => p + 1)} disabled={page === totalPages}>
-            Вперед
-          </button>
-        </div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={page}
+          setCurrentPage={setPage}
+        />
       )}
     </div>
   );

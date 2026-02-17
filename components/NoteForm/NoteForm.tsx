@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "@/lib/api"; 
 import toast from "react-hot-toast";
 import css from "./NoteForm.module.css";
+import { NoteTag } from "@/types/note";
 const NoteSchema = Yup.object().shape({
   title: Yup.string()
     .min(3, "Too Short!")
@@ -25,7 +26,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: ({ title, content, tag }: { title: string; content: string; tag: string }) =>
+    mutationFn: ({ title, content, tag }: { title: string; content: string; tag: NoteTag }) =>
       createNote(title, content, tag),
     onSuccess: () => {
         toast.success('Note created successfully');
@@ -40,7 +41,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
 
   return (
     <Formik
-      initialValues={{ title: '', content: '', tag: 'Todo' }}
+    initialValues={{ title: '', content: '', tag: 'Todo' as NoteTag }}
       validationSchema={NoteSchema}
       onSubmit={(values) => mutation.mutate(values)}
     >
