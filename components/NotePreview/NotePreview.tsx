@@ -6,7 +6,7 @@ import { fetchNoteById } from '@/lib/api';
 import css from "./NotePreview.module.css";
 
 interface NotePreviewProps {
-  id?: string;
+  id: string;
 }
 
 export default function NotePreview({ id }: NotePreviewProps) {
@@ -15,8 +15,8 @@ export default function NotePreview({ id }: NotePreviewProps) {
 
   const { data: note, isLoading } = useQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteById(),
-    enabled: !!id, 
+    queryFn: () => fetchNoteById(id),
+    enabled: !!id, // Запит виконується тільки якщо є id
   });
 
   const handleClose = () => {

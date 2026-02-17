@@ -1,37 +1,38 @@
+import Link from 'next/link';
 import css from './SidebarNotes.module.css';
 
 export default function SidebarNotes() {
   return (
     <ul className={css.menuList}>
       <li className={css.menuItem}>
-        <a href={`/notes/filter/`} className={css.menuLink}>
+        <Link href={`/notes/filter/all`} className={css.menuLink}>
           <strong>All notes</strong>
-        </a>
+        </Link>
       </li>
       <li className={css.menuItem}>
-        <a href={`/notes/filter/${"Todo"}`} className={css.menuLink}>
+        <Link href={`/notes/filter/Todo`} className={css.menuLink}>
           <strong>Todo</strong>
-        </a>
+        </Link>
       </li>
       <li className={css.menuItem}>
-        <a href={`/notes/filter/${"Personal"}`} className={css.menuLink}>
+        <Link href={`/notes/filter/Personal`} className={css.menuLink}>
           <strong>Personal</strong> 
-        </a>
+        </Link>
       </li>
       <li className={css.menuItem}>
-        <a href={`/notes/filter/${"Work"}`} className={css.menuLink}>
+        <Link href={`/notes/filter/Work`} className={css.menuLink}>
          <strong>Work</strong>
-        </a>
+        </Link>
       </li>
       <li className={css.menuItem}>
-        <a href={`/notes/filter/${"Meeting"}`} className={css.menuLink}>
+        <Link href={`/notes/filter/Meeting`} className={css.menuLink}>
        <strong>Meetings</strong> 
-        </a>
+        </Link>
       </li>
       <li className={css.menuItem}>
-        <a href={`/notes/filter/${"Shopping"}`} className={css.menuLink}>
+        <Link href={`/notes/filter/Shopping`} className={css.menuLink}>
          <strong>Shopping</strong>
-        </a>
+        </Link>
       </li>
     </ul>
     

@@ -1,18 +1,18 @@
 import axios from "axios";
-import type { Note } from "@/types/note";
+import type { Note, NoteTag } from "@/types/note";
 
 
 export interface NoteResponse {
   notes: Note[];
   totalPages: number;
 }
-const API_BASE_URL = "https://notehub-public.goit.study/api/notes";
+const NEXT_PUBLIC_API_BASE_URL = "https://notehub-public.goit.study/api/notes";
 
 export async function fetchNotes(
   search: string,
   page: number,
 ): Promise<NoteResponse> {
-  const response = await axios.get<NoteResponse>(`${API_BASE_URL}`, {
+  const response = await axios.get<NoteResponse>(`${NEXT_PUBLIC_API_BASE_URL}`, {
     params: {
       search,
       page,
@@ -31,7 +31,7 @@ export async function createNote(
   tag: string,
 ): Promise<Note> {
   const response = await axios.post<Note>(
-    `${API_BASE_URL}`,
+    `${NEXT_PUBLIC_API_BASE_URL}`,
     {
       title,
       content,
@@ -48,7 +48,7 @@ export async function createNote(
 }
 
 export async function deleteNote(id: string): Promise<Note> {
-  const response = await axios.delete<Note>(`${API_BASE_URL}/${id}`, {
+  const response = await axios.delete<Note>(`${NEXT_PUBLIC_API_BASE_URL}/${id}`, {
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
     },
@@ -56,53 +56,39 @@ export async function deleteNote(id: string): Promise<Note> {
   return response.data;
 }
 
-export async function fetchNoteById(id?: string): Promise<Note> {
-  const response = await axios.get<Note>(`${API_BASE_URL}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
-  return response.data;
-}
-export async function fetchNoteByTag(tag: string): Promise<Note> {
-    const response = await axios.get<Note>(`${API_BASE_URL}/${tag}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-      },
-    });
-    return response.data;
-  }
+export async function fetchNoteById(id:string): Promise<Note> {
+    const response = await axios.get<Note>(
+        `${NEXT_PUBLIC_API_BASE_URL}/${id}`,
+        {
 
-// export async function fetchNoteById(id:string): Promise<Note> {
-//     const response = await axios.get<Note>(
-//         `https://notehub-public.goit.study/api/notes/${id}`,
-//         {
+            headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+            },
+        },
+    );
 
-//             headers: {
-//                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-//             },
-//         },
-//     );
+    return response.data;}
 
-//     return response.data;
-// };
-
-// export const fetchNoteByTag = async (tag?: NoteTag): Promise<NoteResponse> => {
-//     const params: Record<string, string> = {};
-
-//     if (tag && tag !== 'all') {
-//       params.tag = tag;
-//     }
-
-//     const response = await axios.get<NoteResponse>(
-//       'https://notehub-public.goit.study/api/notes',
-//       {
-//         params,
-//         headers: {
-//           Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-//         },
-//       },
-//     );
-
-//     return response.data;
-//   };
+    export async function fetchNoteByTag(tag: NoteTag): Promise<Note[]> {
+        const response = await axios.get<NoteResponse>(
+          `${NEXT_PUBLIC_API_BASE_URL}?tag=${tag}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+            },
+          }
+        );
+        return response.data.notes; // ← змінити з response.data на response.data.notes
+      }
+      
+      export async function fetchAllNotes(): Promise<Note[]> {
+        const response = await axios.get<NoteResponse>(
+          `${NEXT_PUBLIC_API_BASE_URL}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+            },
+          }
+        );
+        return response.data.notes;
+      }

@@ -20,7 +20,7 @@ export default function NotePreviewPage({ params }: Props) {
   return (
     <Modal onClose={close}>    
 
-      <NotePreviewContent id={id} />
+{id && <NotePreviewContent id={id} />}
     </Modal>
   );
 }

@@ -17,7 +17,7 @@ export default function Header() {
               <Link href="/notes/">Notes</Link>
             </li>
             <li>
-  <Link href={`/notes/filter/`}>Notes filtered</Link>
+  <Link href={`/notes/filter/all`}>Notes filtered</Link>
 </li>
           </ul>
         </nav>

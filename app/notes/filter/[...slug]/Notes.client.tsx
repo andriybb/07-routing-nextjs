@@ -1,27 +1,27 @@
 'use client';
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { fetchNoteByTag } from '@/lib/api';
+import { fetchNoteByTag, fetchNotes } from '@/lib/api';
 import NoteList from '@/components/NoteList/NoteList';
 import type { NoteTag } from '@/types/note';
 import { useParams } from 'next/navigation';
 import type { Note } from '@/types/note';
-interface NoteListProps {
-  notes: Note[];
-}
-const NotesByCategory = ({ notes }: NoteListProps) => {
+
+const NotesByCategory = () => {
   const params = useParams();
   const tag = (params?.slug?.[0]) as NoteTag;
 
 
-  const { data, isLoading } = useQuery<Note>({
+  const { data, isLoading } = useQuery<Note[]>({
     queryKey: ['notes', tag],
-    queryFn: () => fetchNoteByTag(tag),
+    queryFn: () => tag 
+  ? fetchNoteByTag(tag) 
+  : fetchNotes("", 1).then(res => res.notes),
     placeholderData: keepPreviousData,
     staleTime: 60 * 1000,
   });
 
-  const note = data?.notes ?? [];
+  const note = data ?? [];
 
   return (
     <div>
