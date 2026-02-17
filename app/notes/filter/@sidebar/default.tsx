@@ -25,7 +25,7 @@ export default function SidebarNotes() {
         </Link>
       </li>
       <li className={css.menuItem}>
-        <Link href={`/notes/filter/Meeting`} className={css.menuLink}>
+        <Link href={`/notes/filter/Meetings`} className={css.menuLink}>
        <strong>Meetings</strong> 
         </Link>
       </li>
