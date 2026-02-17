@@ -6,7 +6,7 @@ import Modal from '@/components/Modal/Modal';
 import NotePreviewContent from '@/components/NotePreview/NotePreview'; 
 
 type Props = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id?: string }>;
 };
 
 export default function NotePreviewPage({ params }: Props) {

@@ -11,5 +11,5 @@ export interface Note {
     notes: Note[];
   }
 
-  export const NOTE_TAGS = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping', 'all'] as const;
+  export const NOTE_TAGS = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'] as const;
 export type NoteTag = (typeof NOTE_TAGS)[number];

@@ -4,7 +4,7 @@ export default function SidebarNotes() {
   return (
     <ul className={css.menuList}>
       <li className={css.menuItem}>
-        <a href={`/notes/filter/all`} className={css.menuLink}>
+        <a href={`/notes/filter/`} className={css.menuLink}>
           <strong>All notes</strong>
         </a>
       </li>
