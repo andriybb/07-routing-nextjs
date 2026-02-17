@@ -9,22 +9,22 @@ export interface NoteResponse {
 const API_BASE_URL = "https://notehub-public.goit.study/api/notes";
 
 export async function fetchNotes(
-  search: string,
-  page: number,
-  tag?: NoteTag,
-): Promise<NoteResponse> {
-  const response = await axios.get<NoteResponse>(API_BASE_URL, {
-    params: {
-      search,
-      page,
-      tag,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
-  return response.data;
-}
+    search: string,
+    page: number,
+    tag?: NoteTag | 'all',
+  ): Promise<NoteResponse> {
+    const response = await axios.get<NoteResponse>(API_BASE_URL, {
+      params: {
+        search,
+        page,
+        tag: tag === 'all' ? undefined : tag, 
+      },
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+      },
+    });
+    return response.data;
+  }
 
 export async function createNote(
   title: string,

@@ -1,5 +1,5 @@
 'use client';
-
+import css from "../../page.module.css";
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { fetchNotes } from '@/lib/api';
 import NoteList from '@/components/NoteList/NoteList';
@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 interface Props {
-  tag?: NoteTag;
+  tag?: NoteTag | 'all';
 }
 
 const NotesByCategory = ({ tag }: Props) => {
@@ -38,18 +38,24 @@ const NotesByCategory = ({ tag }: Props) => {
   };
 
   return (
-    <div>
+    <div className={css.app}>
       <h1>Список Нотаток {tag ? `за фільтром - ${tag}` : ''}</h1>
-
+      <div className={css.toolbar}>
       <SearchBox
         value={search}
         onChange={handleSearchChange}
       />
-
-      <button onClick={() => setIsModalOpen(true)}>
+{totalPages > 1 && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={page}
+          setCurrentPage={setPage}
+        />
+      )}
+      <button className={css.button} onClick={() => setIsModalOpen(true)}>
         Створити нотатку
       </button>
-
+</div>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <NoteForm onClose={() => setIsModalOpen(false)} />
@@ -64,13 +70,7 @@ const NotesByCategory = ({ tag }: Props) => {
         !isLoading && <p>Нотаток не знайдено</p>
       )}
 
-      {totalPages > 1 && (
-        <Pagination
-          totalPages={totalPages}
-          currentPage={page}
-          setCurrentPage={setPage}
-        />
-      )}
+      
     </div>
   );
 };

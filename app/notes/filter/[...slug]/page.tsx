@@ -9,7 +9,7 @@ interface Props {
 
 export default async function NoteFilter({ params }: Props) {
   const { slug } = await params;
-  const tag = slug?.[0] as NoteTag | undefined;
+  const tag = slug?.[0] as NoteTag | 'all' | undefined;
 
   const queryClient = new QueryClient();
 
