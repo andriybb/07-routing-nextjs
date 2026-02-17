@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Note, NoteTag } from "@/types/note";
+import { NOTE_TAGS, type Note, type NoteTag } from "@/types/note";
 
 
 export interface NoteResponse {
@@ -78,7 +78,10 @@ export async function fetchNoteById(id:string): Promise<Note> {
             },
           }
         );
-        return response.data.notes; // ← змінити з response.data на response.data.notes
+        if(tag !== NOTE_TAGS[2]) {
+          return fetchNotes("", 1).then(res => res.notes);
+        }
+        return response.data.notes;
       }
       
       export async function fetchAllNotes(): Promise<Note[]> {
@@ -90,5 +93,6 @@ export async function fetchNoteById(id:string): Promise<Note> {
             },
           }
         );
+        
         return response.data.notes;
       }
